@@ -1,4 +1,4 @@
-package classes;
+package com.xakyth.classes;
 
 public class Multiplication {
 

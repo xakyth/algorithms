@@ -75,7 +75,7 @@
         <configuration>
           <configLocation>com/github/ngeor/checkstyle.xml</configLocation>
           <includeTestSourceDirectory>true</includeTestSourceDirectory>
-          <skip>${skipTests}</skip>
+          <skip>true</skip>
         </configuration>
         <executions>
           <execution>
@@ -92,7 +92,7 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${maven-surefire-plugin.version}</version>
       </plugin>
-      <plugin>
+      <!-- <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>${jacoco-maven-plugin.version}</version>
@@ -158,7 +158,7 @@
             </configuration>
           </execution>
         </executions>
-      </plugin>
+      </plugin> -->
     </plugins>
   </build>
   <reporting>

@@ -78,15 +78,11 @@ public class Multiplication {
         StringBuilder bd = _intRecMult(x.substring(n/2), y.substring(n/2));
 
         //10^n(ac)        
-        for (int i = 0; i < n; i++) {
-            ac.append('0');
-        }
-
+        ac.append(String.format("%" + n + "s", "").replace(' ', '0'));
+        
         //10^(n/2) * (ad + bc)
-        StringBuilder adbc = new StringBuilder();
-        for (int i = 0; i < n / 2; i++) {
-            adbc.append('0');
-        }
+        StringBuilder adbc = new StringBuilder(String.format("%" + n/2 + "s", "").replace(' ', '0'));
+
         int carry = 0;
         for (int i = ad.length() - 1, j = bc.length() - 1; i >= 0 || j >= 0; i--, j--) {
             int temp = 0;

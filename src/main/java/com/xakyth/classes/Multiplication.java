@@ -1,5 +1,7 @@
 package com.xakyth.classes;
 
+import java.math.BigInteger;
+
 public class Multiplication {
 
     public static String simpleIntMult(String a, String b) {
@@ -57,70 +59,27 @@ public class Multiplication {
         x = String.format("%" + desiredLength + "s", x).replace(' ', '0');
         y = String.format("%" + desiredLength + "s", y).replace(' ', '0');
      
-        //removing zeros from left from the result
-        String result = _intRecMult(x, y).toString().replaceAll("^0*", "");
-        if (result.length() == 0) {
-            return "0";
-        } else {
-            return result;
-        }
-    }
-
-    private static StringBuilder _intRecMult(String x, String y) {
-        int n = x.length();
-        if (n == 1) {
-            return new StringBuilder(String.valueOf((x.charAt(0) - '0') * (y.charAt(0) - '0')));
-        }
-        
-        StringBuilder ac = _intRecMult(x.substring(0, n/2), y.substring(0, n/2));
-        StringBuilder ad = _intRecMult(x.substring(0, n/2), y.substring(n/2));
-        StringBuilder bc = _intRecMult(x.substring(n/2), y.substring(0, n/2));
-        StringBuilder bd = _intRecMult(x.substring(n/2), y.substring(n/2));
-
-        //10^n(ac)        
-        ac.append(String.format("%" + n + "s", "").replace(' ', '0'));
-        
-        //10^(n/2) * (ad + bc)
-        StringBuilder adbc = new StringBuilder(String.format("%" + n/2 + "s", "").replace(' ', '0'));
-
-        int carry = 0;
-        for (int i = ad.length() - 1, j = bc.length() - 1; i >= 0 || j >= 0; i--, j--) {
-            int temp = 0;
-            if (i >= 0 && j >= 0) {
-                temp = (ad.charAt(i) - '0') + (bc.charAt(j) - '0') + carry;
-            } else if (i >= 0) {
-                temp = (ad.charAt(i) - '0') + carry;
-            } else {
-                temp = (bc.charAt(j) - '0') + carry;
+        class impl {
+            String _intRecMult(String x, String y) {
+                int n = x.length();
+                //base case
+                if (n == 1) 
+                    return String.valueOf(Integer.parseInt(x) * Integer.parseInt(y));
+                String ac = _intRecMult(x.substring(0, n/2), y.substring(0, n/2));
+                String ad = _intRecMult(x.substring(0, n/2), y.substring(n/2));
+                String bc = _intRecMult(x.substring(n/2), y.substring(0, n/2));
+                String bd = _intRecMult(x.substring(n/2), y.substring(n/2));
+                //10^n(ac)
+                ac += String.format("%" + n + "s", "").replace(' ', '0');
+                //10^(n/2) * (ad + bc)
+                String adbc = String.valueOf((new BigInteger(ad)).add(new BigInteger(bc)));
+                adbc += String.format("%" + n/2 + "s", "").replace(' ', '0');
+                //10^n(ac) + 10^(n/2)(ad + bc) + bd
+                return String.valueOf((new BigInteger(ac).add(new BigInteger(adbc)).add(new BigInteger(bd))));
             }
-            carry = temp / 10;
-            adbc.append(temp % 10);
-        }
-        if (carry > 0) {
-            adbc.append(carry);
         }
 
-        StringBuilder result = new StringBuilder();
-        //10^n(ac) + 10^(n/2)(ad + bc) + bd
-        carry = 0;
-        for (int i = ac.length() - 1, j = 0, k = bd.length() - 1; i >= 0; i--, j++, k--) {
-            int temp = 0;
-            if (k >= 0) {
-                temp = (ac.charAt(i) - '0') + (adbc.charAt(j) - '0') + (bd.charAt(k) - '0') + carry;
-            } else if (j < adbc.length()) {
-                temp = (ac.charAt(i) - '0') + (adbc.charAt(j) - '0') + carry;
-            } else {
-                temp = (ac.charAt(i) - '0') + carry;
-            }
-            result.append(temp % 10);
-            carry = temp / 10;
-        }
-        if (carry > 0) {
-            result.append(carry);
-        }
-
-        result.reverse();
-        return result;
+        return new impl()._intRecMult(x, y).replaceAll("^0+(?!$)", "");
     }
 
 }

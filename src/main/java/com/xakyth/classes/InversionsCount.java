@@ -1,4 +1,4 @@
-package com.xakyth;
+package com.xakyth.classes;
 
 public class InversionsCount {
     

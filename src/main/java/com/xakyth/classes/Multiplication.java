@@ -2,7 +2,7 @@ package com.xakyth.classes;
 
 import java.math.BigInteger;
 
-import javafx.util.Pair;
+import com.xakyth.util.Pair;
 
 public class Multiplication {
 

@@ -2,8 +2,102 @@ package com.xakyth.classes;
 
 public class StrassenMatrixMult {
     
-    //TODO: Strassen's matrix mult
+    //Strassen's matrix mult (assume matrix 2^n x 2^n size)
+    public static int[][] strassenMatrixMult(int[][] X, int[][] Y) {
+        class impl {
+            int[][] strassenMatrixMult(int[][] A, int[][] B) {
+                if (A.length == 1) {
+                    int[][] C = new int[][] { { A[0][0] * B[0][0]} };
+                    return C;
+                } else {
+                    int n = A.length;
+                    int[][] C = new int[n][n];
+                    int[][] a = new int[n/2][n/2];
+                    int[][] b = new int[n/2][n/2];
+                    int[][] c = new int[n/2][n/2];
+                    int[][] d = new int[n/2][n/2];
+                    int[][] e = new int[n/2][n/2];
+                    int[][] f = new int[n/2][n/2];
+                    int[][] g = new int[n/2][n/2];
+                    int[][] h = new int[n/2][n/2];
+                    for (int i = 0; i < n; i++) {
+                        for (int j = 0; j < n; j++) {
+                            if (i < n/2 && j < n/2) {
+                                a[i][j] = A[i][j];
+                                e[i][j] = B[i][j];
+                            } else if (i < n/2 && j >= n/2) {
+                                b[i][j-n/2] = A[i][j];
+                                f[i][j-n/2] = B[i][j];
+                            } else if (i >= n/2 && j < n/2) {
+                                c[i-n/2][j] = A[i][j];
+                                g[i-n/2][j] = B[i][j];
+                            } else {
+                                d[i-n/2][j-n/2] = A[i][j];
+                                h[i-n/2][j-n/2] = B[i][j];
+                            }
+                        }
+                    }
 
+                    //p1 = a(f-h)
+                    int[][] p1 = strassenMatrixMult(a, subtract(f, h));
+                    //p2 = (a+b)h
+                    int[][] p2 = strassenMatrixMult(add(a, b), h);
+                    //p3 = (c+d)e
+                    int[][] p3 = strassenMatrixMult(add(c, d), e);
+                    //p4 = d(g-e)
+                    int[][] p4 = strassenMatrixMult(d, subtract(g, e));
+                    //p5 = (a+d)(e+h)
+                    int[][] p5 = strassenMatrixMult(add(a, d), add(e, h));
+                    //p6 = (b-d)(g+h)
+                    int[][] p6 = strassenMatrixMult(subtract(b, d), add(g, h));
+                    //p7 = (a-c)(e+f)
+                    int[][] p7 = strassenMatrixMult(subtract(a, c), add(e, f));
+
+                    int[][] q1 = add(subtract(add(p5, p4), p2), p6);
+                    int[][] q2 = add(p1, p2);
+                    int[][] q3 = add(p3, p4);
+                    int[][] q4 = subtract(subtract(add(p1, p5), p3), p7);
+                    for (int i = 0; i < n; i++) {
+                        for (int j = 0; j < n; j++) {
+                            if (i < n/2 && j < n/2) {
+                                C[i][j] = q1[i][j];
+                            } else if (i < n/2 && j >= n/2) {
+                                C[i][j] = q2[i][j-n/2];
+                            } else if (i >= n/2 && j < n/2) {
+                                C[i][j] = q3[i-n/2][j];
+                            } else {
+                                C[i][j] = q4[i-n/2][j-n/2];
+                            }
+                        }
+                    }
+
+                    return C;
+                }
+            } 
+            int[][] add(int[][] A, int[][] B) {
+                int[][] C = new int[A.length][A[0].length];
+                for (int i = 0; i < A.length; i++) {
+                    for (int j = 0; j < A[0].length; j++) {
+                            C[i][j] = A[i][j] + B[i][j];
+                    }
+                }
+                return C;
+            }
+            int[][] subtract(int[][] A, int[][] B) {
+                int[][] C = new int[A.length][A[0].length];
+                for (int i = 0; i < A.length; i++) {
+                    for (int j = 0; j < A[0].length; j++) {
+                            C[i][j] = A[i][j] - B[i][j];
+                    }
+                }
+                return C;
+            }
+
+        }
+
+        return new impl().strassenMatrixMult(X, Y);
+    }
+    
     public static int[][] recMatrixMult(int[][] X, int[][] Y) {
         
         class impl {

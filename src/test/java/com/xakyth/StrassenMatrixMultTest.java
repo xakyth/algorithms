@@ -12,6 +12,7 @@ public class StrassenMatrixMultTest {
         int[][] m1_1x1 = new int[1][1];
         int[][] m2_1x1 = new int[1][1];
         assertArrayEquals(StrassenMatrixMult.matrixMult(m1_1x1, m2_1x1), StrassenMatrixMult.recMatrixMult(m1_1x1, m2_1x1));
+        assertArrayEquals(StrassenMatrixMult.matrixMult(m1_1x1, m2_1x1), StrassenMatrixMult.strassenMatrixMult(m1_1x1, m2_1x1));
         m1_1x1[0][0] = 2;
         m2_1x1[0][0] = -3;
         assertArrayEquals(new int[][] { { -6 } }, StrassenMatrixMult.recMatrixMult(m1_1x1, m2_1x1));
@@ -25,6 +26,8 @@ public class StrassenMatrixMultTest {
         int[][] m2_2x2 = new int[][] { { 0, -2 }, { 5, 2 } };
         assertArrayEquals(StrassenMatrixMult.matrixMult(m1_2x2, m2_2x2), StrassenMatrixMult.recMatrixMult(m1_2x2, m2_2x2));
         assertArrayEquals(StrassenMatrixMult.matrixMult(m2_2x2, m1_2x2), StrassenMatrixMult.recMatrixMult(m2_2x2, m1_2x2));
+        assertArrayEquals(StrassenMatrixMult.matrixMult(m1_2x2, m2_2x2), StrassenMatrixMult.strassenMatrixMult(m1_2x2, m2_2x2));
+        assertArrayEquals(StrassenMatrixMult.matrixMult(m1_2x2, m2_2x2), StrassenMatrixMult.strassenMatrixMult(m1_2x2, m2_2x2));
 
         int[][] m1_3x2 = new int[][] { { 1, 2 }, { 3, 4 }, { 5, 6 } };
         int[][] m2_2x3 = new int[][] { { 7, 8, 9 }, {  0, 1, 2 } };
@@ -45,6 +48,8 @@ public class StrassenMatrixMultTest {
         int[][] m2_4x4 = new int[][] { { 24, 1, 2, 3 }, { 84, 21, 435, 22 }, { 26, 25, 93, 74 }, { 26, 25, 93, 74 } };
         assertArrayEquals(StrassenMatrixMult.matrixMult(m1_4x4, m2_4x4), StrassenMatrixMult.recMatrixMult(m1_4x4, m2_4x4));
         assertArrayEquals(StrassenMatrixMult.matrixMult(m2_4x4, m1_4x4), StrassenMatrixMult.recMatrixMult(m2_4x4, m1_4x4));
+        assertArrayEquals(StrassenMatrixMult.matrixMult(m1_4x4, m2_4x4), StrassenMatrixMult.strassenMatrixMult(m1_4x4, m2_4x4));
+        assertArrayEquals(StrassenMatrixMult.matrixMult(m2_4x4, m1_4x4), StrassenMatrixMult.strassenMatrixMult(m2_4x4, m1_4x4));
         
         int[][] m1_1x5 = new int[][] { { 1, 84, 21, 33, -5 } };
         int[][] m2_5x7 = new int[][] { { 24, 1, 2, 5, 2, 3, 3 }, { 84, 21, 0, -4, 23, 435, 22 }, { 26, 25, 93, 11, 233, -3, 74 }, { 44, 26, 25, 93, 74, 1, 2 }, { 0, 234, 75, -22, 74, 1, 2 }};

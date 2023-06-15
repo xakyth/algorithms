@@ -1,5 +1,6 @@
 package com.xakyth.classes;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -7,7 +8,7 @@ import com.xakyth.util.Pair;
 import com.xakyth.util.Point;
 
 public class ClosestPair {
-    public Pair<Point, Point> findClosestPair(Point[] P) {
+    public static Pair<Point, Point> findClosestPair(Point[] P) {
 
         class implementation {
             Pair<Point, Point> search(Point[] P_x, Point[] P_y) {
@@ -58,11 +59,22 @@ public class ClosestPair {
                     return splitPair;
                 }
             }
-            //TODO: implement serachSplitPair
             public Pair<Point, Point> searchSplitPair(Point[] P_x, Point[] P_y, double d, Pair<Point, Point> bestPair) {
                 double median_x = P_x[(P_x.length % 2 == 0) ? P_x.length / 2 - 1 : P_x.length].x;
+                ArrayList<Point> S_y = new ArrayList<>();
                 for (int i = 0; i < P_y.length; i++) {
-                    
+                    if (Math.abs(P_y[i].x - median_x) < d) {
+                        S_y.add(P_y[i]);
+                    }
+                }
+                for (int i = 0; i < S_y.size() - 1; i++) {
+                    for (int j = i + 1; j < Math.min(i + 8, S_y.size()); j++) {
+                        double tempD = computeDistance(S_y.get(i), S_y.get(j));
+                        if (tempD < d) {
+                            d = tempD;
+                            bestPair = new Pair<Point,Point>(S_y.get(i), S_y.get(j));
+                        }
+                    }
                 }
                 return bestPair;
             }
@@ -78,12 +90,13 @@ public class ClosestPair {
             }
         });
         Point[] P_y = new Point[P_x.length];
-        System.arraycopy(P, 0, P_y, 0, P_x.length];
+        System.arraycopy(P, 0, P_y, 0, P_x.length);
         Arrays.sort(P_y, 0, P_y.length, new Comparator<Point>() {
             public int compare(Point p1, Point p2) {
                 return Double.compare(p1.y, p2.y);
             }
         });
+        return new implementation().search(P_x, P_y);
 
     }
 }

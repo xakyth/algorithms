@@ -30,11 +30,20 @@ public class ClosestPairTest {
         assertEquals(2, res.getValue().x, 0.001);
         assertEquals(2, res.getValue().y, 0.001);
 
-        P.add(new Point(4.5, 4.5));
+        P.add(new Point(4.9, 4.9));
         res = ClosestPair.findClosestPair(P.toArray(new Point[P.size()]));
         assertEquals(4, res.getKey().x, 0.001);
         assertEquals(4, res.getKey().y, 0.001);
-        assertEquals(4.5, res.getValue().x, 0.001);
-        assertEquals(4.5, res.getValue().y, 0.001);
+        assertEquals(4.9, res.getValue().x, 0.001);
+        assertEquals(4.9, res.getValue().y, 0.001);
+
+        P.add(new Point(-10, -3));
+        P.add(new Point(9, -3.05));
+        P.add(new Point(7, 3));
+        P.add(new Point(7.05, -9));
+        assertEquals(4, res.getKey().x, 0.001);
+        assertEquals(4, res.getKey().y, 0.001);
+        assertEquals(4.9, res.getValue().x, 0.001);
+        assertEquals(4.9, res.getValue().y, 0.001);
     }   
 }

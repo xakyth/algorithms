@@ -13,7 +13,7 @@ import com.xakyth.classes.QuickSort;
 public class QuickSortTest {
 
     @Test
-    void QuickSortTest() {
+    void quickSortTest() {
         assertArrayEquals(new int[] { 1, 2, 3, 4 }, QuickSort.sort(new int[] { 4, 3, 2, 1}));
         assertArrayEquals(new int[0], QuickSort.sort(new int[0]));
         assertArrayEquals(new int[] { 1 }, QuickSort.sort(new int[] { 1 }));

@@ -8,3 +8,4 @@
 [Quick sort](https://github.com/xakyth/algorithms/blob/main/src/main/java/com/xakyth/classes/QuickSort.java) - O(nlog(n))  
 [Quick select](https://github.com/xakyth/algorithms/blob/main/src/main/java/com/xakyth/classes/QuickSelect.java) - O(n)  
 [Strongly connected components](https://github.com/xakyth/algorithms/blob/main/src/main/java/com/xakyth/classes/StronglyConnectedComponents.java) - O(m + n)  
+[Dijkstra's shortest-path](https://github.com/xakyth/algorithms/blob/main/src/main/java/com/xakyth/classes/DijkstraShortestPath.java) - O(nm)  

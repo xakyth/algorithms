@@ -4,9 +4,11 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.PriorityQueue;
 
 import com.xakyth.util.Pair;
 
@@ -39,30 +41,39 @@ public class DijkstraShortestPath {
     public static String search(HashMap<Integer, ArrayList<Pair<Integer, Long>>> graph, int s) {
         HashSet<Integer> processed = new HashSet<>();
         processed.add(s);
+        
         HashMap<Integer, Long> distMap = new HashMap<>();
         distMap.put(s, 0L);
+        for (Integer v : graph.keySet()) {
+            if (v == s) 
+                continue;
+            distMap.put(v, Long.MAX_VALUE);
+        }
+        PriorityQueue<Pair<Integer, Long>> heap = new PriorityQueue<>(new Comparator<Pair<Integer, Long>>() {
+            public int compare(Pair<Integer, Long> p1, Pair<Integer, Long> p2) { 
+                return Integer.compare(p1.getKey(), p2.getKey());
+            };
+        });
 
-        //assuming graph is connected
-        while (processed.size() != graph.keySet().size()) {
-            long minDist = Long.MAX_VALUE;
-            Integer w = 0; //next vertex with minimal distance
-            for (Integer v : processed) {
-                ArrayList<Pair<Integer, Long>> incident = graph.get(v);
-                if (incident == null) continue;
-                long curDist = distMap.get(v);
-                //across all edges outgoing from processed finding unexplored with minimal distance
-                for (Pair<Integer, Long> p : incident) {
-                    if (processed.contains(p.getKey())) continue;
-                    if (curDist + p.getValue() < minDist) {
-                        minDist = curDist + p.getValue();
-                        w = p.getKey();
-                    }
+        heap.offer(new Pair<>(s, 0L));
+        while (!heap.isEmpty()) {
+            Pair<Integer, Long> v = heap.poll();
+            ArrayList<Pair<Integer, Long>> incident = graph.get(v.getKey());
+            if (incident == null)
+                continue;
+            Long curDist = v.getValue();
+            if (curDist > distMap.get(v.getKey())) 
+                continue;
+
+            for (Pair<Integer, Long> w : incident) {
+                Long newDist = curDist + w.getValue();
+                if (newDist < distMap.get(w.getKey())) {
+                    distMap.put(w.getKey(), newDist);
+                    heap.offer(new Pair<>(w.getKey(), newDist));
                 }
             }
-            processed.add(w);
-            distMap.put(w, minDist);
         }
-        
+
         return String.format("%d,%d,%d,%d,%d,%d,%d,%d,%d,%d", distMap.get(7), distMap.get(37), distMap.get(59), distMap.get(82), distMap.get(99),
          distMap.get(115), distMap.get(133), distMap.get(165), distMap.get(188), distMap.get(197));
     }

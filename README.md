@@ -9,4 +9,5 @@
 [Quick select](https://github.com/xakyth/algorithms/blob/main/src/main/java/com/xakyth/classes/QuickSelect.java) - O(n)  
 [Strongly connected components](https://github.com/xakyth/algorithms/blob/main/src/main/java/com/xakyth/classes/StronglyConnectedComponents.java) - O(m + n)  
 [Dijkstra's shortest-path](https://github.com/xakyth/algorithms/blob/main/src/main/java/com/xakyth/classes/DijkstraShortestPath.java) - O((n+m)*logn)  
-[Prim's Minimum Spanning Tree](https://github.com/xakyth/algorithms/blob/main/src/main/java/com/xakyth/classes/PrimMST.java) - O(n+m*logm)  
+[Prim's Minimum Spanning Tree](https://github.com/xakyth/algorithms/blob/main/src/main/java/com/xakyth/classes/PrimMST.java) - O((n+m)*logn)  
+[Kruskals's Minimum Spanning Tree](https://github.com/xakyth/algorithms/blob/main/src/main/java/com/xakyth/classes/KruskalMST.java) - O((n+m)*logn)  
